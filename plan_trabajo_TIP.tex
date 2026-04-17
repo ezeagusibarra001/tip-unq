@@ -1,0 +1,252 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[top=3cm, bottom=3cm, left=3.5cm, right=3cm]{geometry}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\begin{document}
+
+% ── Portada ────────────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+
+{\Large UNIVERSIDAD NACIONAL DE QUILMES}
+
+\vspace{0.3cm}
+{\large Departamento de Ciencia y Tecnología}
+
+\vspace{0.3cm}
+{\large Tecnicatura Universitaria en Programación Informática}
+
+\vspace{2.5cm}
+
+{\LARGE \textbf{TURABILITY: PLATAFORMA INTEGRAL DE\\[0.3cm] TURISMO ACCESIBLE E INCLUSIÓN SOCIAL}}
+
+\vspace{2.5cm}
+
+{\large Alumno: Ezequiel Ibarra}
+
+\vspace{0.3cm}
+{\large Director: Dra.\ Gabriela B.\ Arévalo}
+
+\vspace{2cm}
+
+{\large Abril de 2026}
+
+\end{titlepage}
+
+% ── A. Introducción ────────────────────────────────────────────────────────────
+\section*{A. Introducción e Importancia del Tema}
+
+El turismo accesible representa una necesidad crítica para la inclusión social de las personas
+con discapacidad. En Argentina, según el Instituto Nacional de Estadística y Censos (INDEC),
+aproximadamente el 12{,}9\% de la población presenta algún tipo de discapacidad, lo que
+equivale a más de 5 millones de personas que enfrentan barreras cotidianas al momento de
+planificar un viaje. A nivel global, la Organización Mundial del Turismo (OMT) estima que el
+turismo accesible representa un mercado potencial de más de 1.000 millones de personas,
+incluyendo adultos mayores y personas con movilidad reducida~[1].
+
+A pesar de su magnitud, la oferta de información turística accesible en línea es fragmentada,
+incompleta y en muchos casos inexistente. Los recursos turísticos raramente especifican con
+precisión sus condiciones de accesibilidad, y no existen plataformas nacionales que centralicen
+esta información de manera estructurada y verificada.
+
+\textbf{Turability} es una plataforma digital de turismo accesible desarrollada con el objetivo
+de conectar a turistas con discapacidad con recursos turísticos, profesionales del sector y
+paquetes de viaje adaptados a sus necesidades específicas. La plataforma centraliza información
+de accesibilidad detallada en cinco dimensiones: motriz, visual, auditiva, cognitiva y dietética,
+con más de 200 atributos específicos por recurso, facilitando la planificación de experiencias
+turísticas verdaderamente inclusivas.
+
+El proyecto fue distinguido en el Premio ILAN~[2] por su impacto social, validando su relevancia
+en el contexto de la inclusión digital y el turismo accesible a nivel regional. El presente
+Trabajo de Inserción Profesional documenta el desarrollo integral de la plataforma y propone
+la extensión del sistema mediante dos nuevos módulos: un sistema de suscripciones para
+el widget de accesibilidad web Turaway, y la finalización de la plataforma de capacitación
+en línea orientada a prestadores del sector turístico.
+
+% ── B. Estado actual ───────────────────────────────────────────────────────────
+\section*{B. Estado Actual del Sistema}
+
+El ecosistema Turability está compuesto por los siguientes módulos, desarrollados e implementados
+en entorno productivo:
+
+\subsection*{B.1 API Central}
+
+Backend desarrollado en Laravel~12 con PHP~8.2, que centraliza todos los recursos del
+ecosistema. Incluye: sistema de autenticación con JWT, Google OAuth y verificación por OTP;
+CRUD completo de recursos turísticos y profesionales con más de 200 atributos de accesibilidad;
+sistema de control de acceso basado en roles (RBAC) con los roles SUPERADMIN, ADMIN,
+PROVIDER, CLIENT, DESTINATION\_MANAGER y AGENCIA\_DE\_TURISMO; gestión de reservas, paquetes
+turísticos, anunciantes y sistema multi-tenant. Se integra con Cloudflare~R2 para almacenamiento
+de archivos, Resend para correos transaccionales y la API de Google Maps para geolocalización.
+La base de datos principal es MySQL, con Firebase Firestore para módulos específicos como
+órdenes, leads y API keys del widget.
+
+\subsection*{B.2 Panel de Administración}
+
+Aplicación web desarrollada en Next.js con React, que ofrece una interfaz de gestión
+diferenciada por rol. Incluye: dashboard con estadísticas del sistema; CRUD completo de
+recursos turísticos, profesionales, usuarios, roles y permisos granulares; gestión de anuncios
+publicitarios con cuatro placements disponibles; administración de paquetes turísticos y reservas;
+sistema de importación masiva de recursos vía Excel; y gestión de API keys para el widget
+Turaway. Cuenta con exportación a Excel, modo responsivo, dark mode y notificaciones en tiempo
+real.
+
+\subsection*{B.3 Plataforma para Turistas}
+
+Aplicación web pública desarrollada en Next.js, orientada al usuario final. Incluye: flujo de
+registro y onboarding en cinco pasos con captura del perfil de accesibilidad del viajero;
+búsqueda y filtros avanzados de recursos por geografía, categoría y tipo de discapacidad;
+detalle de recursos con galería, información de contacto, mapa y sección de accesibilidad;
+sistema de reseñas con calificación por dimensión; planificador de viajes mediante chat con
+la IA ``Abi''; flujo de reservas multi-paso; favoritos; y perfil de usuario editable. La
+plataforma está adaptada para navegación por teclado y lectores de pantalla, cumpliendo
+estándares de accesibilidad ARIA.
+
+\subsection*{B.4 Widget Turaway~v1}
+
+Widget de accesibilidad web embebible en sitios de terceros, desarrollado en JavaScript
+puro con Shadow DOM para encapsulación de estilos. Se integra mediante un único tag de
+script con una API key de autenticación. Implementa doce funcionalidades de accesibilidad
+visual e interactiva: ajuste de contraste, saturación, espaciado tipográfico, fuente para
+dislexia, cursor ampliado, guía de lectura, máscara de lectura, text-to-speech, pausa de
+animaciones, ocultamiento de imágenes, entre otras. Soporta cuatro idiomas con detección
+automática del navegador y persiste las preferencias del usuario en almacenamiento local.
+Cuenta con un sistema de validación de API keys en Firebase Firestore que verifica actividad,
+vigencia y dominios autorizados.
+
+\subsection*{B.5 Plataforma E-Learning (versión alpha)}
+
+Plataforma de capacitación en línea desarrollada en Next.js, orientada a prestadores y
+profesionales del turismo accesible. Incluye en su versión actual: catálogo de cursos con
+precios y filtros; detalle de curso con programa curricular; carrito de compras; flujo de
+checkout con pago por transferencia bancaria; reproductor de video con Vimeo y tracking de
+progreso; visualizador de documentos (PDF, imagen, Word); quizzes con límite de intentos y
+feedback inmediato; y el chatbot ``Abi'' integrado tanto en la web como en WhatsApp vía
+Kapso. La plataforma consume contenido desde Strapi CMS y registra el progreso del usuario
+en Firebase Firestore.
+
+% ── C. Objetivos ───────────────────────────────────────────────────────────────
+\section*{C. Objetivos del Trabajo}
+
+El objetivo principal del TIP es consolidar la plataforma Turability como un producto
+completo y sostenible, incorporando dos módulos que completan la propuesta de valor del
+ecosistema:
+
+\subsection*{Objetivo 1 — Sistema de suscripciones y mejoras al widget Turaway}
+
+El widget Turaway se encuentra en producción en su primera versión, con validación de
+API keys pero sin diferenciación de planes ni modelo de negocio activo. El objetivo de
+este módulo es:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item Implementar un sistema de planes de suscripción (Starter, Pro, Enterprise) con
+        diferenciación de funcionalidades y cuotas de uso por plan.
+  \item Integrar un gateway de pagos recurrentes (MercadoPago) para la facturación automática
+        de suscripciones.
+  \item Desarrollar un panel de autogestión para clientes del widget donde puedan administrar
+        su suscripción, dominios autorizados y visualizar métricas de uso.
+  \item Incorporar analytics de consumo por API key: impresiones del widget, funcionalidades
+        más utilizadas e información de sesión.
+  \item Ampliar el conjunto de funcionalidades del widget: perfiles de accesibilidad predefinidos
+        (motriz, visual, dislexia, cognitivo), navegación por voz, diccionario en línea y
+        outline de estructura de página.
+  \item Implementar minificación y optimización del bundle del script.
+\end{itemize}
+
+\subsection*{Objetivo 2 — Finalización de la plataforma e-learning}
+
+La plataforma de capacitación se encuentra en versión alpha con las funcionalidades centrales
+implementadas. El objetivo de este módulo es llevar la plataforma a un estado de producción
+completo, equivalente a las principales plataformas del mercado:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item Integrar MercadoPago como método de pago principal en el checkout, reemplazando el
+        flujo manual de transferencia bancaria.
+  \item Implementar el panel de administración de la plataforma con gestión de órdenes, cursos,
+        contenidos y usuarios, sin depender de Firebase Console.
+  \item Desarrollar un sistema de gestión de staff para empresas, que permita a organizaciones
+        asignar cursos a sus empleados y realizar seguimiento del progreso grupal.
+  \item Implementar cuestionarios de autoevaluación previos al inicio de cada curso para
+        personalizar el recorrido de aprendizaje del estudiante.
+  \item Completar el sistema de generación y emisión de certificados digitales con validación
+        por código QR.
+  \item Implementar el flujo de onboarding del usuario dentro de la plataforma.
+  \item Mejorar el tracking de progreso para incluir quizzes como contenido completable.
+\end{itemize}
+
+% ── D. Plan de trabajo ─────────────────────────────────────────────────────────
+\section*{D. Plan de Trabajo Propuesto}
+
+\begin{itemize}[leftmargin=0pt, label={}]
+  \item \textbf{Mayo 2026 — Junio 2026:} Documentación y sistematización de las funcionalidades
+        existentes. Relevamiento técnico y definición de arquitectura para los módulos nuevos.
+        Diseño de la base de datos para suscripciones y del flujo de billing.
+
+  \item \textbf{Junio 2026 — Julio 2026:} Desarrollo del sistema de suscripciones para Turaway.
+        Integración de MercadoPago para cobros recurrentes. Panel de autogestión para clientes
+        del widget.
+
+  \item \textbf{Julio 2026 — Agosto 2026:} Mejoras al widget de accesibilidad: nuevos perfiles
+        predefinidos, navegación por voz, diccionario, analytics de uso y optimización del bundle.
+
+  \item \textbf{Agosto 2026 — Septiembre 2026:} Finalización de la plataforma e-learning.
+        Integración de MercadoPago en checkout, panel de administración, sistema de staff,
+        cuestionarios de autoevaluación y certificados digitales.
+
+  \item \textbf{Octubre 2026:} Redacción del informe final. Documentación técnica del sistema.
+
+  \item \textbf{Noviembre 2026:} Presentación y defensa del TIP.
+\end{itemize}
+
+% ── E. Lugar ───────────────────────────────────────────────────────────────────
+\section*{E. Lugar donde se Realizará el Trabajo}
+
+El trabajo se realizará en la Universidad Nacional de Quilmes y en las instalaciones de
+AMIA (Asociación Mutual Israelita Argentina), organización en la que el autor se desempeña
+profesionalmente y en cuyo contexto se originó el proyecto Turability.
+
+% ── F. Referencias ─────────────────────────────────────────────────────────────
+\section*{Referencias Bibliográficas}
+
+\begin{itemize}[leftmargin=0pt, label={}, itemsep=4pt]
+  \item {[1]} Organización Mundial del Turismo (OMT). \textbf{Turismo Accesible para Todos}.
+        \url{https://www.unwto.org/accessible-tourism}
+
+  \item {[2]} Premio ILAN de Innovación Social con Impacto Judío.
+        \url{https://ilanpremio.org/}
+
+  \item {[3]} Web Content Accessibility Guidelines (WCAG) 2.1.
+        W3C Recommendation, 2018.
+        \url{https://www.w3.org/TR/WCAG21/}
+
+  \item {[4]} Faulkner, S. et al. \textbf{HTML: The Living Standard}.
+        WHATWG, 2024. \url{https://html.spec.whatwg.org/}
+
+  \item {[5]} Otwell, T. \textbf{Laravel — The PHP Framework for Web Artisans}.
+        \url{https://laravel.com/docs/}
+
+  \item {[6]} Vercel Inc. \textbf{Next.js Documentation}.
+        \url{https://nextjs.org/docs}
+
+  \item {[7]} INDEC. \textbf{Estudio Nacional sobre el Perfil de las Personas con Discapacidad}.
+        Argentina, 2018.
+\end{itemize}
+
+\end{document}
