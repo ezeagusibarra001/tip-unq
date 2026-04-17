@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//usr/local/**)",
+      "Bash(brew list *)",
+      "Read(//Library/**)",
+      "Bash(brew info *)",
+      "Read(//opt/homebrew/Caskroom/mactex/**)"
+    ]
+  }
+}
