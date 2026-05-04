@@ -79,7 +79,7 @@ El proyecto obtuvo el primer puesto en el Premio ILAN-AMIA~[2] de Innovación So
 en el contexto de la inclusión digital y el turismo accesible a nivel regional. El presente
 Trabajo de Inserción Profesional documenta el desarrollo integral de la plataforma y propone
 la extensión del sistema mediante dos nuevos módulos: un sistema de suscripciones para
-el widget de accesibilidad web Turaway, y la finalización de la plataforma de capacitación
+el widget de accesibilidad web Turability Access, y la finalización de la plataforma de capacitación
 en línea orientada a prestadores del sector turístico.
 
 % ── B. Estado actual ───────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ diferenciada por rol. Incluye: dashboard con estadísticas del sistema; CRUD com
 recursos turísticos, profesionales, usuarios, roles y permisos granulares; gestión de anuncios
 publicitarios con cuatro placements disponibles; administración de paquetes turísticos y reservas;
 sistema de importación masiva de recursos vía Excel; y gestión de API keys para el widget
-Turaway. Cuenta con exportación a Excel, modo responsivo, dark mode y notificaciones en tiempo
+Turability Access. Cuenta con exportación a Excel, modo responsivo, dark mode y notificaciones en tiempo
 real.
 
 \subsection*{B.3 Plataforma para Turistas}
@@ -121,7 +121,7 @@ la IA ``Abi''; flujo de reservas multi-paso; favoritos; y perfil de usuario edit
 plataforma está adaptada para navegación por teclado y lectores de pantalla, cumpliendo
 estándares de accesibilidad ARIA.
 
-\subsection*{B.4 Widget Turaway~v1}
+\subsection*{B.4 Widget Turability Access~v1}
 
 Widget de accesibilidad web embebible en sitios de terceros, desarrollado en JavaScript
 puro con Shadow DOM para encapsulación de estilos. Se integra mediante un único tag de
@@ -151,9 +151,9 @@ El objetivo principal del TIP es consolidar la plataforma Turability como un pro
 completo y sostenible, incorporando dos módulos que completan la propuesta de valor del
 ecosistema:
 
-\subsection*{Objetivo 1 — Sistema de suscripciones y mejoras al widget Turaway}
+\subsection*{Objetivo 1 — Sistema de suscripciones y mejoras al widget Turability Access}
 
-El widget Turaway se encuentra en producción en su primera versión, con validación de
+El widget Turability Access se encuentra en producción en su primera versión, con validación de
 API keys pero sin diferenciación de planes ni modelo de negocio activo. El objetivo de
 este módulo es:
 
@@ -201,7 +201,7 @@ completo, equivalente a las principales plataformas del mercado:
         existentes. Relevamiento técnico y definición de arquitectura para los módulos nuevos.
         Diseño de la base de datos para suscripciones y del flujo de billing.
 
-  \item \textbf{Junio 2026 — Julio 2026:} Desarrollo del sistema de suscripciones para Turaway.
+  \item \textbf{Junio 2026 — Julio 2026:} Desarrollo del sistema de suscripciones para Turability Access.
         Integración de Stripe para cobros recurrentes a nivel global. Panel de autogestión para clientes
         del widget.
 
@@ -217,8 +217,60 @@ completo, equivalente a las principales plataformas del mercado:
   \item \textbf{Noviembre 2026:} Presentación y defensa del TIP.
 \end{itemize}
 
-% ── E. Lugar ───────────────────────────────────────────────────────────────────
-\section*{E. Lugar donde se Realizará el Trabajo}
+% ── E. Decisiones Tecnológicas ────────────────────────────────────────────────
+\section*{E. Decisiones Tecnológicas}
+
+La elección del stack tecnológico responde tanto a criterios técnicos objetivos como a la
+experiencia acumulada del autor, priorizando herramientas que permiten avanzar con rapidez
+sin resignar robustez ni escalabilidad.
+
+\subsection*{Frontend — Next.js con TypeScript}
+
+El ecosistema de trabajo habitual del autor es JavaScript/TypeScript, lo que hace de
+Next.js una elección natural para el frontend. Más allá de la familiaridad, Next.js es
+actualmente el framework de referencia para aplicaciones React con renderizado del lado
+del servidor (SSR), ofreciendo:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Versatilidad de renderizado:} permite combinar SSR, SSG y renderizado del
+        lado del cliente según las necesidades de cada ruta, algo crítico para una
+        plataforma con contenido público (SEO) y áreas privadas (dashboard).
+  \item \textbf{TypeScript nativo:} la tipificación estricta con TSX reduce errores en
+        tiempo de desarrollo y mejora la mantenibilidad del código a largo plazo.
+  \item \textbf{Ecosistema y adopción:} cuenta con amplia documentación, comunidad activa
+        y soporte de primera clase por parte de Vercel, lo que garantiza continuidad
+        y actualizaciones frecuentes.
+\end{itemize}
+
+Alternativas como Nuxt (Vue) o Remix fueron descartadas por tratarse de entornos menos
+familiares para el autor y con menor penetración en el mercado al momento del desarrollo.
+
+\subsection*{Backend — Laravel (PHP)}
+
+Para el backend se eligió Laravel, el framework PHP más consolidado del mercado, con más
+de una década de desarrollo activo. La decisión se fundamenta en:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Batería de herramientas incluida:} Laravel provee de forma nativa un ORM
+        (Eloquent), sistema de migraciones de base de datos, envío de correos electrónicos,
+        colas de trabajo, autenticación y manejo de archivos, entre otros. Esto permite
+        avanzar rápidamente sin necesidad de integrar paquetes de terceros para
+        funcionalidades comunes.
+  \item \textbf{Madurez y estabilidad:} a diferencia de frameworks más nuevos, Laravel
+        tiene un historial probado en entornos de producción, con convenciones bien
+        establecidas que facilitan el mantenimiento del código.
+  \item \textbf{Ecosistema PHP:} el ecosistema PHP cuenta con un enorme conjunto de
+        librerías disponibles vía Composer y una amplia base de documentación y recursos
+        de la comunidad.
+\end{itemize}
+
+Alternativas como Node.js (Express/NestJS) fueron consideradas, pero Laravel ofrece un
+nivel de productividad mayor para el tipo de funcionalidades requeridas (facturación,
+notificaciones, gestión de usuarios), donde contar con soluciones integradas marca una
+diferencia significativa en los tiempos de desarrollo.
+
+% ── F. Lugar ───────────────────────────────────────────────────────────────────
+\section*{F. Lugar donde se Realizará el Trabajo}
 
 El trabajo se realizará en la Universidad Nacional de Quilmes, institución en la que el autor cursa
 su formación de grado y en cuyo marco académico se desarrolla el presente Trabajo de Inserción
