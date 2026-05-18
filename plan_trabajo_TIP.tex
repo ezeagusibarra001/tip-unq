@@ -17,6 +17,13 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
+%\usepackage[final]{changes}
+\usepackage{changes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%comando de corrección
+\newcommand{\ga}[1]{\textbf{{\color{red}GA: #1}}\\}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -68,12 +75,15 @@ incompleta y en muchos casos inexistente. Los recursos turísticos raramente esp
 precisión sus condiciones de accesibilidad, y no existen plataformas nacionales que centralicen
 esta información de manera estructurada y verificada.
 
-\textbf{Turability} es una plataforma digital de turismo accesible desarrollada con el objetivo
+\added{En base a un relevamiento hecho por <a completar>, se desarrolló}
+\textbf{Turability} \replaced{como}{es} una plataforma digital de turismo accesible desarrollada con el objetivo
 de conectar a turistas con discapacidad con recursos turísticos, profesionales del sector y
-paquetes de viaje adaptados a sus necesidades específicas. La plataforma centraliza información
+paquetes de viaje adaptados a sus necesidades específicas. \added{El objetivo de la plataforma es centralizar}{La plataforma centraliza} información
 de accesibilidad detallada en cinco dimensiones: motriz, visual, auditiva, cognitiva y dietética,
 con más de 200 atributos específicos por recurso, facilitando la planificación de experiencias
 turísticas verdaderamente inclusivas.
+
+\ga{Podríamos desarrollar cuáles son las diferentes experiencias }
 
 El proyecto obtuvo el primer puesto en el Premio ILAN-AMIA~[2] de Innovación Social, validando su relevancia
 en el contexto de la inclusión digital y el turismo accesible a nivel regional. El presente
@@ -87,23 +97,25 @@ en línea orientada a prestadores del sector turístico.
 
 El ecosistema Turability está compuesto por los siguientes módulos, desarrollados e implementados
 en entorno productivo:
+\ga{¿Podrías agregar un gráfico simple donde incluís a los módulos y mostrás quién se comunica con quien? Algo sencillo pero para que se vea la arquitectura.}
 
 \subsection*{B.1 API Central}
 
-Backend desarrollado en Laravel~12 con PHP~8.2, que centraliza todos los recursos del
-ecosistema. Incluye: sistema de autenticación con JWT, Google OAuth y verificación por OTP;
+\ga{Acá necesitamos una frase que describa para que sirve la API Central desde el punto de vista funcionamiento, y después sí podés tener la implementación. Si no, es muy chocante para quienes evalúan la propuesta - que no son informáticos todos - que uno describa directamente las tecnologías.} \\
+\added{El API Central es un} backend desarrollado en Laravel~12 con PHP~8.2, que centraliza todos los recursos del
+ecosistema. Incluye sistema de autenticación con JWT, Google OAuth y verificación por OTP;
 CRUD completo de recursos turísticos y profesionales con más de 200 atributos de accesibilidad;
-sistema de control de acceso basado en roles (RBAC) con los roles SUPERADMIN, ADMIN,
-PROVIDER, CLIENT, DESTINATION\_MANAGER y AGENCIA\_DE\_TURISMO; gestión de reservas, paquetes
+sistema de control de acceso basado en roles (RBAC) con \deleted{los roles SUPERADMIN, ADMIN,
+PROVIDER, CLIENT, DESTINATION\_MANAGER y AGENCIA\_DE\_TURISMO}; gestión de reservas, paquetes
 turísticos, anunciantes y sistema multi-tenant. Se integra con Cloudflare~R2 para almacenamiento
 de archivos, Resend para correos transaccionales y la API de Google Maps para geolocalización.
 La base de datos principal es MySQL, con Firebase Firestore para módulos específicos como
 órdenes, leads y API keys del widget.
 
 \subsection*{B.2 Panel de Administración}
-
-Aplicación web desarrollada en Next.js con React, que ofrece una interfaz de gestión
-diferenciada por rol. Incluye: dashboard con estadísticas del sistema; CRUD completo de
+\ga{Lo mismo que para el primer módulo. Una mínina descripción desde lo conceptual para que se entienda}\\
+\added{El panel de administración es una} aplicación web desarrollada en Next.js con React, que ofrece una interfaz de gestión
+diferenciada por rol. Incluye dashboard con estadísticas del sistema; CRUD completo de
 recursos turísticos, profesionales, usuarios, roles y permisos granulares; gestión de anuncios
 publicitarios con cuatro placements disponibles; administración de paquetes turísticos y reservas;
 sistema de importación masiva de recursos vía Excel; y gestión de API keys para el widget
@@ -111,8 +123,8 @@ Turability Access. Cuenta con exportación a Excel, modo responsivo, dark mode y
 real.
 
 \subsection*{B.3 Plataforma para Turistas}
-
-Aplicación web pública desarrollada en Next.js, orientada al usuario final. Incluye: flujo de
+\ga{Lo mismo que para el primer módulo. Una mínina descripción desde lo conceptual para que se entienda}\\
+Es una aplicación web pública desarrollada en Next.js, orientada al usuario final. Incluye: flujo de
 registro y onboarding en cinco pasos con captura del perfil de accesibilidad del viajero;
 búsqueda y filtros avanzados de recursos por geografía, categoría y tipo de discapacidad;
 detalle de recursos con galería, información de contacto, mapa y sección de accesibilidad;
@@ -122,8 +134,9 @@ plataforma está adaptada para navegación por teclado y lectores de pantalla, c
 estándares de accesibilidad ARIA.
 
 \subsection*{B.4 Widget Turability Access~v1}
+\ga{Lo mismo que para el primer módulo. Una mínina descripción desde lo conceptual para que se entienda}\\
 
-Widget de accesibilidad web embebible en sitios de terceros, desarrollado en JavaScript
+Es un Widget de accesibilidad web embebible en sitios de terceros, desarrollado en JavaScript
 puro con Shadow DOM para encapsulación de estilos. Se integra mediante un único tag de
 script con una API key de autenticación. Implementa doce funcionalidades de accesibilidad
 visual e interactiva: ajuste de contraste, saturación, espaciado tipográfico, fuente para
@@ -134,8 +147,8 @@ Cuenta con un sistema de validación de API keys en Firebase Firestore que verif
 vigencia y dominios autorizados.
 
 \subsection*{B.5 Plataforma E-Learning (versión alpha)}
-
-Plataforma de capacitación en línea desarrollada en Next.js, orientada a prestadores y
+\ga{Lo mismo que para el primer módulo. Una mínina descripción desde lo conceptual para que se entienda}\\
+Es una Plataforma de capacitación en línea desarrollada en Next.js, orientada a prestadores y
 profesionales del turismo accesible. Incluye en su versión actual: catálogo de cursos con
 precios y filtros; detalle de curso con programa curricular; carrito de compras; flujo de
 checkout con pago por transferencia bancaria; reproductor de video con Vimeo y tracking de
@@ -149,9 +162,10 @@ en Firebase Firestore.
 
 El objetivo principal del TIP es consolidar la plataforma Turability como un producto
 completo y sostenible, incorporando dos módulos que completan la propuesta de valor del
-ecosistema:
+ecosistema: \ga{mencioná aquí cuáles son los dos módulos y por qué los incorporás a este ecosistema}
 
-\subsection*{Objetivo 1 — Sistema de suscripciones y mejoras al widget Turability Access}
+\added{\section{Descripción de Nuevas Funcionalidades}}
+\subsection*{\deleted{Objetivo 1 — } Sistema de suscripciones y mejoras al widget Turability Access}
 
 El widget Turability Access se encuentra en producción en su primera versión, con validación de
 API keys pero sin diferenciación de planes ni modelo de negocio activo. El objetivo de
@@ -172,7 +186,7 @@ este módulo es:
   \item Implementar minificación y optimización del bundle del script.
 \end{itemize}
 
-\subsection*{Objetivo 2 — Finalización de la plataforma e-learning}
+\subsection*{\deleted{Objetivo 2 — }Finalización de la plataforma e-learning}
 
 La plataforma de capacitación se encuentra en versión alpha con las funcionalidades centrales
 implementadas. El objetivo de este módulo es llevar la plataforma a un estado de producción
