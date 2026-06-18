@@ -51,7 +51,7 @@
 {\large Alumno: Ezequiel Ibarra}
 
 \vspace{0.3cm}
-{\large Director: Dra.\ Gabriela B.\ Arévalo}
+{\large Directora: Dra.\ Gabriela B.\ Arévalo}
 
 \vspace{2cm}
 
@@ -94,13 +94,15 @@ El proyecto obtuvo el primer puesto en el Premio ILAN-AMIA~[2] de Innovación So
 en el contexto de la inclusión digital y el turismo accesible a nivel regional. El presente
 Trabajo de Inserción Profesional documenta el desarrollo integral de la plataforma y propone
 la extensión del sistema mediante dos nuevos módulos: un sistema de suscripciones para
-el widget de accesibilidad web Turability Access, y la finalización de la plataforma de capacitación
-en línea orientada a prestadores del sector turístico.
+el widget —un componente de software que se incrusta en sitios web de terceros para ampliar
+sus funciones— de accesibilidad web Turability Access, y la finalización de la plataforma de
+capacitación en línea orientada a prestadores del sector turístico.
 
 % ── B. Estado actual ───────────────────────────────────────────────────────────
 \section*{B. Estado Actual del Sistema}
 
-El ecosistema Turability está compuesto por los siguientes módulos, desarrollados e implementados
+El ecosistema Turability —el conjunto de aplicaciones interconectadas que conforman la
+plataforma— está compuesto por los siguientes módulos, desarrollados e implementados
 en entorno productivo:
 \begin{figure}[h]
   \centering
@@ -111,112 +113,157 @@ en entorno productivo:
 
 \subsection*{B.1 API Central}
 
-La API Central es el núcleo del ecosistema Turability: actúa como intermediario entre todos los módulos del sistema, gestionando la lógica de negocio, el acceso a los datos y la comunicación con servicios externos. Es la única fuente de verdad del sistema y el punto a través del cual fluye toda operación, desde el registro de un usuario hasta la validación de una reserva. Técnicamente, es un backend desarrollado en Laravel~12 con PHP~8.2, que centraliza todos los recursos del
-ecosistema. Incluye sistema de autenticación con JWT, Google OAuth y verificación por OTP;
-CRUD completo de recursos turísticos y profesionales con más de 200 atributos de accesibilidad;
-sistema de control de acceso basado en roles (RBAC); gestión de reservas, paquetes
-turísticos, anunciantes y sistema multi-tenant. Se integra con Cloudflare~R2 para almacenamiento
+La API Central (interfaz de programación de aplicaciones que comunica a los distintos módulos entre sí) es el núcleo del ecosistema Turability: actúa como intermediario entre todos los módulos del sistema, gestionando la lógica de negocio, el acceso a los datos y la comunicación con servicios externos. Es la única fuente de verdad del sistema y el punto a través del cual fluye toda operación, desde el registro de un usuario hasta la validación de una reserva. Técnicamente, es un servidor de aplicación (backend) desarrollado en Laravel~12 con PHP~8.2, que centraliza todos los recursos del
+sistema. Incluye autenticación mediante estándares como JWT y Google OAuth, y verificación en dos pasos por código de un solo uso (OTP);
+gestión integral —alta, baja, modificación y consulta— de recursos turísticos y profesionales con más de 200 atributos de accesibilidad;
+control de acceso basado en roles (RBAC); gestión de reservas, paquetes
+turísticos, anunciantes y arquitectura multiinquilino (multi-tenant) que aísla los datos de cada cliente. Se integra con Cloudflare~R2 para almacenamiento
 de archivos, Resend para correos transaccionales y la API de Google Maps para geolocalización.
 La base de datos principal es MySQL, con Firebase Firestore para módulos específicos como
-órdenes, leads y API keys del widget.
+órdenes, contactos comerciales (leads) y claves de API del widget.
 
 \subsection*{B.2 Panel de Administración}
 
-El Panel de Administración es la herramienta interna con la que el equipo de Turability gestiona el contenido y el funcionamiento de toda la plataforma. Permite administrar recursos turísticos, usuarios, roles, publicidad y reservas desde una interfaz centralizada, con distintos niveles de acceso según el perfil de cada operador. Técnicamente, es una aplicación web desarrollada en Next.js con React, que ofrece una interfaz de gestión diferenciada por rol. Incluye dashboard con estadísticas del sistema; CRUD completo de
-recursos turísticos, profesionales, usuarios, roles y permisos granulares; gestión de anuncios
-publicitarios con cuatro placements disponibles; administración de paquetes turísticos y reservas;
-sistema de importación masiva de recursos vía Excel; y gestión de API keys para el widget
-Turability Access. Cuenta con exportación a Excel, modo responsivo, dark mode y notificaciones en tiempo
+El Panel de Administración es la herramienta interna con la que el equipo de Turability gestiona el contenido y el funcionamiento de toda la plataforma. Permite administrar recursos turísticos, usuarios, roles, publicidad y reservas desde una interfaz centralizada, con distintos niveles de acceso según el perfil de cada operador. Técnicamente, es una aplicación web desarrollada en Next.js con React, que ofrece una interfaz de gestión diferenciada por rol. Incluye un tablero (dashboard) con estadísticas del sistema; gestión integral de
+recursos turísticos, profesionales, usuarios, roles y permisos granulares; administración de anuncios
+publicitarios con cuatro ubicaciones publicitarias disponibles; administración de paquetes turísticos y reservas;
+sistema de importación masiva de recursos mediante planillas Excel; y gestión de claves de API para el widget
+Turability Access. Cuenta con exportación a Excel, diseño adaptable a distintas pantallas, modo oscuro y notificaciones en tiempo
 real.
 
 \subsection*{B.3 Plataforma para Turistas}
 
 La Plataforma para Turistas es la cara visible de Turability hacia el público general. Permite a personas con discapacidad buscar y descubrir destinos, alojamientos, actividades y profesionales turísticos con información de accesibilidad detallada y verificada, realizar reservas y planificar sus viajes con la asistencia de una inteligencia artificial. Está diseñada para ser usable por personas con distintos tipos de discapacidad, cumpliendo estándares internacionales de accesibilidad web. Técnicamente, es una aplicación web pública desarrollada en Next.js, orientada al usuario final. Incluye: flujo de
-registro y onboarding en cinco pasos con captura del perfil de accesibilidad del viajero;
+registro e incorporación guiada (onboarding) en cinco pasos con captura del perfil de accesibilidad del viajero;
 búsqueda y filtros avanzados de recursos por geografía, categoría y tipo de discapacidad;
 detalle de recursos con galería, información de contacto, mapa y sección de accesibilidad;
-sistema de reseñas con calificación por dimensión; planificador de viajes mediante chat con
-la IA ``Abi''; flujo de reservas multi-paso; favoritos; y perfil de usuario editable. La
+sistema de reseñas con calificación por dimensión; planificador de viajes mediante una conversación con
+la inteligencia artificial ``Abi''; flujo de reservas en varios pasos; favoritos; y perfil de usuario editable. La
 plataforma está adaptada para navegación por teclado y lectores de pantalla, cumpliendo
-estándares de accesibilidad ARIA.
+los estándares de accesibilidad ARIA del W3C.
 
 \subsection*{B.4 Widget Turability Access~v1}
 
 Turability Access es una herramienta de accesibilidad web que cualquier sitio puede incorporar para mejorar la experiencia de sus visitantes con discapacidad visual, motriz o cognitiva. Una vez instalado, aparece como un panel flotante que permite al usuario ajustar el comportamiento visual e interactivo del sitio según sus necesidades, sin requerir modificaciones en el sitio huésped. Técnicamente, es un widget embebible en sitios de terceros, desarrollado en JavaScript
-puro con Shadow DOM para encapsulación de estilos. Se integra mediante un único tag de
-script con una API key de autenticación. Implementa doce funcionalidades de accesibilidad
+puro con Shadow DOM (una técnica que aísla sus estilos para que no interfieran con los del sitio anfitrión). Se integra mediante una única etiqueta de
+script —un fragmento de código que el sitio incorpora— autenticada con una clave de API. Implementa doce funcionalidades de accesibilidad
 visual e interactiva: ajuste de contraste, saturación, espaciado tipográfico, fuente para
-dislexia, cursor ampliado, guía de lectura, máscara de lectura, text-to-speech, pausa de
-animaciones, ocultamiento de imágenes, entre otras. Soporta cuatro idiomas con detección
-automática del navegador y persiste las preferencias del usuario en almacenamiento local.
-Cuenta con un sistema de validación de API keys en Firebase Firestore que verifica actividad,
+dislexia, cursor ampliado, guía de lectura, máscara de lectura, lectura de texto en voz alta (text-to-speech), pausa de
+animaciones, ocultamiento de imágenes, entre otras. Admite cuatro idiomas con detección
+automática del navegador y conserva las preferencias del usuario en el almacenamiento local del navegador.
+Cuenta con un sistema de validación de claves de API en Firebase Firestore que verifica su actividad,
 vigencia y dominios autorizados.
 
-\subsection*{B.5 Plataforma E-Learning (versión alpha)}
+\subsection*{B.5 Plataforma de Capacitación en Línea / E-Learning (versión preliminar)}
 
-La Plataforma E-Learning de Turability está orientada a la formación de prestadores y profesionales del turismo accesible. Su propósito es brindar a guías, hoteleros, agencias y otros actores del sector las herramientas conceptuales y prácticas para ofrecer experiencias verdaderamente inclusivas, con certificación digital al finalizar cada programa. Técnicamente, es una plataforma de capacitación en línea desarrollada en Next.js, orientada a prestadores y
+La Plataforma de Capacitación en Línea de Turability está orientada a la formación de prestadores y profesionales del turismo accesible. Su propósito es brindar a guías, hoteleros, agencias y otros actores del sector las herramientas conceptuales y prácticas para ofrecer experiencias verdaderamente inclusivas, con certificación digital al finalizar cada programa. Técnicamente, es una plataforma de capacitación en línea (e-learning) desarrollada en Next.js, orientada a prestadores y
 profesionales del turismo accesible. Incluye en su versión actual: catálogo de cursos con
-precios y filtros; detalle de curso con programa curricular; carrito de compras; flujo de
-checkout con pago por transferencia bancaria; reproductor de video con Vimeo y tracking de
-progreso; visualizador de documentos (PDF, imagen, Word); quizzes con límite de intentos y
-feedback inmediato; y el chatbot ``Abi'' integrado tanto en la web como en WhatsApp vía
-Kapso. La plataforma consume contenido desde Strapi CMS y registra el progreso del usuario
+precios y filtros; detalle de curso con programa curricular; carrito de compras; proceso de
+pago (checkout) por transferencia bancaria; reproductor de video con Vimeo y seguimiento del
+progreso; visualizador de documentos (PDF, imagen, Word); cuestionarios (quizzes) con límite de intentos y
+devolución inmediata; y el asistente conversacional ``Abi'', integrado tanto en la web como en WhatsApp mediante
+Kapso. La plataforma toma su contenido desde Strapi —un gestor de contenidos (CMS)— y registra el progreso del usuario
 en Firebase Firestore.
 
 % ── C. Objetivos ───────────────────────────────────────────────────────────────
 \section*{C. Objetivos del Trabajo}
 
-El objetivo principal del TIP es consolidar la plataforma Turability como un producto
-completo y sostenible, incorporando dos módulos que completan la propuesta de valor del
-ecosistema: el sistema de suscripciones para el widget de accesibilidad web \textbf{Turability Access},
-y la finalización de la \textbf{plataforma de capacitación e-learning} orientada a prestadores del
-sector turístico. El primero dota al widget de un modelo de negocio activo y escalable,
-permitiendo que la herramienta de accesibilidad web llegue a sitios de terceros de forma
-sostenida. El segundo cierra una brecha crítica del ecosistema: la formación de los actores
-del sector, que son quienes en última instancia garantizan que la experiencia accesible
-prometida en la plataforma se concrete en la realidad.
+\subsection*{Objetivo General}
+
+Consolidar la plataforma Turability como un producto completo, económicamente sostenible y
+técnicamente mantenible, incorporando los dos módulos que completan su propuesta de valor: el
+sistema de suscripciones del widget de accesibilidad web \textbf{Turability Access} y la finalización
+de la \textbf{plataforma de capacitación en línea} orientada a prestadores del sector turístico.
+
+La incorporación de estos módulos es, precisamente, lo que habilita esa sostenibilidad. El
+sistema de suscripciones dota al widget de un modelo de negocio que genera ingresos recurrentes
+y le permite llegar a sitios de terceros de forma sostenida en el tiempo: en esto consiste la
+\textbf{sostenibilidad económica}. A su vez, ambos desarrollos se construyen sobre una arquitectura
+documentada y ordenada que asegura su mantenimiento y evolución futura, lo que aporta
+\textbf{sostenibilidad técnica}. Por último, la plataforma de capacitación cierra una brecha del propio
+producto —la formación de los prestadores del sector—, ya que son ellos quienes, en última
+instancia, garantizan que la experiencia accesible que ofrece la plataforma se concrete en la
+práctica.
+
+\subsection*{Objetivos Específicos}
+
+\textit{Asociados al sistema de suscripciones de Turability Access:}
+\begin{itemize}[leftmargin=1.5cm]
+  \item Diseñar e implementar un sistema de planes de suscripción con diferenciación de
+        funcionalidades y cuotas de uso.
+  \item Integrar una pasarela de pagos que permita la facturación recurrente y automática de
+        las suscripciones a nivel global.
+  \item Desarrollar un panel de autogestión donde cada cliente administre su suscripción, sus
+        dominios autorizados y sus métricas de uso.
+  \item Ampliar el conjunto de funcionalidades de accesibilidad del widget y optimizar su
+        rendimiento.
+\end{itemize}
+
+\textit{Asociados a la plataforma de capacitación en línea:}
+\begin{itemize}[leftmargin=1.5cm]
+  \item Integrar un medio de pago electrónico que reemplace el flujo manual de transferencia
+        bancaria.
+  \item Desarrollar un panel de administración propio para la gestión de órdenes, cursos,
+        contenidos y usuarios.
+  \item Implementar la gestión de personal para empresas, que permita asignar cursos a los
+        equipos de trabajo y seguir su progreso.
+  \item Completar el sistema de emisión de certificados digitales con validación por código QR.
+\end{itemize}
+
+\textit{Objetivos transversales (aplican a todo el trabajo):}
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Accesibilidad como requisito de calidad:} garantizar que cada desarrollo cumpla
+        los estándares internacionales de accesibilidad web (WCAG~2.1 y ARIA), en coherencia con
+        el propósito mismo de la plataforma.
+  \item \textbf{Sostenibilidad económica:} dotar a la plataforma de modelos de ingreso —las
+        suscripciones del widget y la venta de cursos— que financien su mantenimiento y
+        crecimiento.
+  \item \textbf{Sostenibilidad técnica:} documentar y sistematizar tanto la arquitectura
+        existente como la de los nuevos módulos, para asegurar su mantenibilidad y escalabilidad.
+\end{itemize}
 
 \section*{Descripción de Nuevas Funcionalidades}
 \subsection*{Sistema de suscripciones y mejoras al widget Turability Access}
 
 El widget Turability Access se encuentra en producción en su primera versión, con validación de
-API keys pero sin diferenciación de planes ni modelo de negocio activo. El objetivo de
+claves de API pero sin diferenciación de planes ni modelo de negocio activo. El objetivo de
 este módulo es:
 
 \begin{itemize}[leftmargin=1.5cm]
   \item Implementar un sistema de planes de suscripción (Starter, Pro, Enterprise) con
         diferenciación de funcionalidades y cuotas de uso por plan.
-  \item Integrar Stripe como gateway de pagos recurrentes para la facturación automática
+  \item Integrar Stripe como pasarela de pagos recurrentes para la facturación automática
         de suscripciones, permitiendo operaciones a nivel global.
-  \item Desarrollar un panel de autogestión para clientes del widget donde puedan administrar
-        su suscripción, dominios autorizados y visualizar métricas de uso.
-  \item Incorporar analytics de consumo por API key: impresiones del widget, funcionalidades
-        más utilizadas e información de sesión.
+  \item Desarrollar un panel de autogestión para los clientes del widget donde puedan administrar
+        su suscripción y sus dominios autorizados, y visualizar sus métricas de uso.
+  \item Incorporar analítica de consumo por clave de API: cantidad de veces que se muestra el
+        widget, funcionalidades más utilizadas e información de sesión.
   \item Ampliar el conjunto de funcionalidades del widget: perfiles de accesibilidad predefinidos
-        (motriz, visual, dislexia, cognitivo), navegación por voz, diccionario en línea y
-        outline de estructura de página.
-  \item Implementar minificación y optimización del bundle del script.
+        (motriz, visual, dislexia, cognitivo), navegación por voz, diccionario en línea y un
+        esquema navegable de la estructura de la página (outline).
+  \item Optimizar el paquete de código (bundle) que el widget entrega al navegador, reduciendo
+        su tamaño para acelerar la carga.
 \end{itemize}
 
-\subsection*{Finalización de la plataforma e-learning}
+\subsection*{Finalización de la plataforma de capacitación en línea}
 
-La plataforma de capacitación se encuentra en versión alpha con las funcionalidades centrales
+La plataforma de capacitación se encuentra en una versión preliminar (alpha) con las funcionalidades centrales
 implementadas. El objetivo de este módulo es llevar la plataforma a un estado de producción
 completo, equivalente a las principales plataformas del mercado:
 
 \begin{itemize}[leftmargin=1.5cm]
-  \item Integrar MercadoPago como método de pago principal en el checkout, reemplazando el
+  \item Integrar MercadoPago como método de pago principal en el proceso de pago, reemplazando el
         flujo manual de transferencia bancaria.
   \item Implementar el panel de administración de la plataforma con gestión de órdenes, cursos,
         contenidos y usuarios, sin depender de Firebase Console.
-  \item Desarrollar un sistema de gestión de staff para empresas, que permita a organizaciones
-        asignar cursos a sus empleados y realizar seguimiento del progreso grupal.
+  \item Desarrollar un sistema de gestión de personal para empresas, que permita a las organizaciones
+        asignar cursos a sus empleados y realizar el seguimiento del progreso grupal.
   \item Implementar cuestionarios de autoevaluación previos al inicio de cada curso para
         personalizar el recorrido de aprendizaje del estudiante.
   \item Completar el sistema de generación y emisión de certificados digitales con validación
         por código QR.
-  \item Implementar el flujo de onboarding del usuario dentro de la plataforma.
-  \item Mejorar el tracking de progreso para incluir quizzes como contenido completable.
+  \item Implementar el flujo de incorporación guiada (onboarding) del usuario dentro de la plataforma.
+  \item Mejorar el seguimiento del progreso para incluir los cuestionarios como contenido completable.
 \end{itemize}
 
 % ── D. Plan de trabajo ─────────────────────────────────────────────────────────
@@ -225,17 +272,17 @@ completo, equivalente a las principales plataformas del mercado:
 \begin{itemize}[leftmargin=0pt, label={}]
   \item \textbf{Mayo 2026 — Junio 2026:} Documentación y sistematización de las funcionalidades
         existentes. Relevamiento técnico y definición de arquitectura para los módulos nuevos.
-        Diseño de la base de datos para suscripciones y del flujo de billing.
+        Diseño de la base de datos para suscripciones y del flujo de facturación.
 
   \item \textbf{Junio 2026 — Julio 2026:} Desarrollo del sistema de suscripciones para Turability Access.
         Integración de Stripe para cobros recurrentes a nivel global. Panel de autogestión para clientes
         del widget.
 
   \item \textbf{Julio 2026 — Agosto 2026:} Mejoras al widget de accesibilidad: nuevos perfiles
-        predefinidos, navegación por voz, diccionario, analytics de uso y optimización del bundle.
+        predefinidos, navegación por voz, diccionario y analítica de uso, y optimización del paquete de código.
 
-  \item \textbf{Agosto 2026 — Septiembre 2026:} Finalización de la plataforma e-learning.
-        Integración de MercadoPago en checkout, panel de administración, sistema de staff,
+  \item \textbf{Agosto 2026 — Septiembre 2026:} Finalización de la plataforma de capacitación en línea.
+        Integración de MercadoPago en el proceso de pago, panel de administración, sistema de gestión de personal,
         cuestionarios de autoevaluación y certificados digitales.
 
   \item \textbf{Octubre 2026:} Redacción del informe final. Documentación técnica del sistema.
@@ -246,21 +293,23 @@ completo, equivalente a las principales plataformas del mercado:
 % ── E. Decisiones Tecnológicas ────────────────────────────────────────────────
 \section*{E. Decisiones Tecnológicas}
 
-La elección del stack tecnológico responde tanto a criterios técnicos objetivos como a la
+La elección del conjunto de tecnologías (stack) responde tanto a criterios técnicos objetivos como a la
 experiencia acumulada del autor, priorizando herramientas que permiten avanzar con rapidez
 sin resignar robustez ni escalabilidad.
 
 \subsection*{Frontend — Next.js con TypeScript}
 
 El ecosistema de trabajo habitual del autor es JavaScript/TypeScript, lo que hace de
-Next.js una elección natural para el frontend. Más allá de la familiaridad, Next.js es
-actualmente el framework de referencia para aplicaciones React con renderizado del lado
-del servidor (SSR), ofreciendo:
+Next.js una elección natural para el frontend (la interfaz y la lógica que se ejecutan del
+lado del cliente, en el navegador). Más allá de la familiaridad, Next.js es actualmente el
+marco de desarrollo (framework) de referencia para aplicaciones React con renderizado del
+lado del servidor (SSR), y ofrece:
 
 \begin{itemize}[leftmargin=1.5cm]
-  \item \textbf{Versatilidad de renderizado:} permite combinar SSR, SSG y renderizado del
-        lado del cliente según las necesidades de cada ruta, algo crítico para una
-        plataforma con contenido público (SEO) y áreas privadas (dashboard).
+  \item \textbf{Versatilidad de renderizado:} permite combinar SSR, generación de páginas
+        estáticas (SSG) y renderizado del lado del cliente según las necesidades de cada ruta,
+        algo crítico para una plataforma con contenido público —que debe posicionarse en los
+        buscadores (SEO)— y áreas privadas de gestión.
   \item \textbf{TypeScript nativo:} la tipificación estricta con TSX reduce errores en
         tiempo de desarrollo y mejora la mantenibilidad del código a largo plazo.
   \item \textbf{Ecosistema y adopción:} cuenta con amplia documentación, comunidad activa
@@ -277,8 +326,8 @@ Para el backend se eligió Laravel, el framework PHP más consolidado del mercad
 de una década de desarrollo activo. La decisión se fundamenta en:
 
 \begin{itemize}[leftmargin=1.5cm]
-  \item \textbf{Batería de herramientas incluida:} Laravel provee de forma nativa un ORM
-        (Eloquent), sistema de migraciones de base de datos, envío de correos electrónicos,
+  \item \textbf{Batería de herramientas incluida:} Laravel provee de forma nativa un mapeador
+        objeto-relacional (ORM, en este caso Eloquent), sistema de migraciones de base de datos, envío de correos electrónicos,
         colas de trabajo, autenticación y manejo de archivos, entre otros. Esto permite
         avanzar rápidamente sin necesidad de integrar paquetes de terceros para
         funcionalidades comunes.
@@ -286,7 +335,7 @@ de una década de desarrollo activo. La decisión se fundamenta en:
         tiene un historial probado en entornos de producción, con convenciones bien
         establecidas que facilitan el mantenimiento del código.
   \item \textbf{Ecosistema PHP:} el ecosistema PHP cuenta con un enorme conjunto de
-        librerías disponibles vía Composer y una amplia base de documentación y recursos
+        librerías disponibles a través de Composer (su gestor de dependencias) y una amplia base de documentación y recursos
         de la comunidad.
 \end{itemize}
 
